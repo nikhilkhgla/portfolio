@@ -1,8 +1,9 @@
-import { Hono } from "hono";
+import { Hono } from 'hono';
 
-// Define the 'env' type
-type env = Record<string, unknown>;
+const app = new Hono();
 
-const app = new Hono<{ Bindings: env }>();
+app.get('/', (c) => {
+  return c.text('Hello from Hono on Vercel!');
+});
 
 export default app;
