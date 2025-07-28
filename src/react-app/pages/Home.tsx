@@ -4,6 +4,7 @@ import Header from '@/react-app/components/Header';
 import Footer from '@/react-app/components/Footer';
 
 
+
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -133,12 +134,14 @@ export default function Home() {
               <div className="relative w-40 h-40 mx-auto mb-8">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full animate-pulse"></div>
                 <div className="absolute inset-2 bg-gray-900 rounded-full overflow-hidden">
-                  <img 
-                    src="src\assets\nikhil-kh.png" 
-                    alt="Nikhil Khandelwal" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+  <img 
+    src="/nikhil-kh.png" 
+    alt="Nikhil Khandelwal" 
+    className="w-full h-full object-cover"
+  />
+</div>
+
+
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
                 <div className="absolute top-0 right-0 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
                   <Sparkles className="w-4 h-4 text-white" />
@@ -174,10 +177,15 @@ export default function Home() {
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
-              <button className="group px-10 py-4 border-2 border-white/40 text-white rounded-full font-bold hover:bg-white/20 hover:scale-110 hover:border-white/60 transform transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm">
-                <Download className="w-5 h-5 group-hover:animate-bounce" />
-                <span>Download Resume</span>
-              </button>
+              <a
+  href="/resume.pdf"
+  download
+  className="group px-10 py-4 border-2 border-white/40 text-white rounded-full font-bold hover:bg-white/20 hover:scale-110 hover:border-white/60 transform transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm"
+>
+  <Download className="w-5 h-5 group-hover:animate-bounce" />
+  <span>Download Resume</span>
+</a>
+
             </div>
             
             <div className="flex justify-center space-x-6 mb-8">
@@ -556,35 +564,49 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-              <form className="space-y-6">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-                  />
-                </div>
-                <div>
-                  <textarea
-                    rows={4}
-                    placeholder="Your Message"
-                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-                  ></textarea>
-                </div>
-                <button className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:scale-105 transform transition-all duration-300">
-                  Send Message
-                </button>
-              </form>
-            </div>
+           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8">
+  <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
+  <form
+    action="https://formspree.io/f/mrblkpne"
+    method="POST"
+    className="space-y-6"
+  >
+    <div>
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        required
+        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
+      />
+    </div>
+    <div>
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        required
+        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
+      />
+    </div>
+    <div>
+      <textarea
+        name="message"
+        rows={4}
+        placeholder="Your Message"
+        required
+        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:scale-105 transform transition-all duration-300"
+    >
+      Send Message
+    </button>
+  </form>
+</div>
+
           </div>
         </div>
       </section>
