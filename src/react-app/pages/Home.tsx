@@ -70,7 +70,7 @@ export default function Home() {
     {
       degree: 'Bachelor of Technology in Computer Science',
       institution: 'GLA University, Mathura',
-      period: 'Expected June 2025',
+      period: 'June 2025',
       type: 'degree'
     },
     {
