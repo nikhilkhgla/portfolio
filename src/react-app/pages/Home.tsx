@@ -20,37 +20,88 @@ export default function Home() {
   };
 
   const projects = [
-    {
-      title: 'Eco India E-commerce Platform',
-      description: 'Revolutionary e-commerce platform for eco-friendly products with AI-powered help desk and 3D product visualization.',
-      tech: ['React.js', 'Node.js', 'Python', 'AI', '3D Modeling'],
-      features: ['AI Help Desk', '3D Product Visualization', 'Eco-friendly Focus', 'Interactive UI'],
-      gradient: 'from-green-400 to-blue-500',
-      link: 'https://ecoindia.vercel.app/'
-    },
-    {
-      title: 'Dynamic Mobile App',
-      description: 'Comprehensive mobile application built during internship, focusing on innovative front-end design and functionality.',
-      tech: ['Angular', 'Ionic', 'TypeScript'],
-      features: ['Cross-platform', 'Dynamic UI', 'Responsive Design', 'User-centric'],
-      gradient: 'from-purple-400 to-pink-500'
-    },
-    {
-      title: 'Todo Management App',
-      description: 'Full-featured task management application with user authentication and complete CRUD operations.',
-      tech: ['Python', 'Django', 'SQLite', 'HTML/CSS'],
-      features: ['User Authentication', 'Task CRUD', 'Responsive UI', 'Data Persistence'],
-      gradient: 'from-blue-400 to-indigo-500'
-    },
-    {
-      title: 'Blog Publishing Platform',
-      description: 'Dynamic blogging platform enabling content creation, management, and publication with modern UI.',
-      tech: ['Django', 'HTML', 'CSS', 'SQLite'],
-      features: ['Content Management', 'Dynamic Rendering', 'Publishing System', 'Modern UI'],
-      gradient: 'from-orange-400 to-red-500'
-    }
-  ];
-
+  {
+    title: 'Eco India E-commerce Platform',
+    description:
+      'Revolutionary e-commerce platform for eco-friendly products with AI-powered help desk and 3D product visualization.',
+    tech: ['React.js', 'Node.js', 'Python', 'AI', '3D Modeling'],
+    features: [
+      'AI Help Desk',
+      '3D Product Visualization',
+      'Eco-friendly Focus',
+      'Interactive UI'
+    ],
+    gradient: 'from-green-400 to-blue-500',
+    link: 'https://ecoindia.vercel.app/'
+  },
+  {
+    title: 'Anava Computing – Corporate Website',
+    description:
+      'Professional corporate website designed for Anava Computing with focus on branding, performance, and clean UI.',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    features: [
+      'Corporate UI Design',
+      'Responsive Layout',
+      'Performance Optimized',
+      'Client-focused Design'
+    ],
+    gradient: 'from-cyan-400 to-blue-600',
+    link: 'https://anavacomputing.com/'
+  },
+  {
+    title: 'Cinnamon Kitchen – Shopify Store',
+    description:
+      'Modern Shopify-based e-commerce store designed and customized as a Shopify Developer with a premium food brand experience.',
+    tech: ['Shopify', 'Liquid', 'HTML', 'CSS', 'JavaScript'],
+    features: [
+      'Shopify Theme Customization',
+      'Product & Collection Pages',
+      'Mobile Responsive Design',
+      'Conversion-focused UI'
+    ],
+    gradient: 'from-rose-400 to-orange-500',
+    link: 'https://cinnamon.kitchen/'
+  },
+  {
+    title: 'Dynamic Mobile App (Internship Project)',
+    description:
+      'Comprehensive cross-platform mobile application developed during internship with focus on performance and modern UI.',
+    tech: ['Angular', 'Ionic', 'TypeScript'],
+    features: [
+      'Cross-platform',
+      'Dynamic UI',
+      'Responsive Design',
+      'User-centric Experience'
+    ],
+    gradient: 'from-purple-400 to-pink-500'
+  },
+  {
+    title: 'Todo Management App',
+    description:
+      'Full-featured task management application with secure authentication and complete CRUD functionality.',
+    tech: ['Python', 'Django', 'SQLite', 'HTML', 'CSS'],
+    features: [
+      'User Authentication',
+      'Task CRUD Operations',
+      'Responsive UI',
+      'Data Persistence'
+    ],
+    gradient: 'from-blue-400 to-indigo-500'
+  },
+  {
+    title: 'Blog Publishing Platform',
+    description:
+      'Dynamic blogging platform enabling content creation, editing, and publishing with a clean modern interface.',
+    tech: ['Django', 'HTML', 'CSS', 'SQLite'],
+    features: [
+      'Content Management System',
+      'Dynamic Rendering',
+      'Publishing Workflow',
+      'Modern UI'
+    ],
+    gradient: 'from-orange-400 to-red-500'
+  }
+];
   const experience = [
     {
       title: 'Associate Intern',
