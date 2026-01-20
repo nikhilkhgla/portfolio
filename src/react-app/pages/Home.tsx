@@ -118,7 +118,7 @@ export default function Home() {
   },
   {
     title: 'Shopify Executive',
-    company: 'Cinnamon Kitchen',
+    company: 'The Cinnamon Kitchen',
     period: 'November 2025 – January 2026',
     description:
       'Worked as a Shopify Executive while independently managing complete e-commerce operations.',
