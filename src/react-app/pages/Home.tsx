@@ -103,19 +103,37 @@ export default function Home() {
   }
 ];
   const experience = [
-    {
-      title: 'Associate Intern',
-      company: 'Spundan Consultancy and IT Solutions Pvt. Ltd.',
-      period: 'June 2023 – July 2023',
-      description: 'Developed dynamic mobile applications with focus on innovative front-end design using Angular and Ionic framework.',
-      achievements: [
-        'Built responsive mobile application in 2-month intensive program',
-        'Showcased exceptional problem-solving skills and innovative thinking',
-        'Collaborated effectively with cross-functional development teams',
-        'Improved app functionality through creative solutions'
-      ]
-    }
-  ];
+  {
+    title: 'Associate Intern',
+    company: 'Spundan Consultancy and IT Solutions Pvt. Ltd.',
+    period: 'June 2023 – July 2023',
+    description:
+      'Developed dynamic mobile applications with a strong focus on innovative front-end design using Angular and Ionic framework.',
+    achievements: [
+      'Built responsive mobile application in an intensive internship program',
+      'Demonstrated strong problem-solving skills and innovative thinking',
+      'Collaborated effectively with cross-functional development teams',
+      'Enhanced application performance and overall user experience'
+    ]
+  },
+  {
+    title: 'Shopify Executive',
+    company: 'Cinnamon Kitchen',
+    period: 'November 2025 – January 2026',
+    description:
+      'Worked as a Shopify Executive while independently managing complete e-commerce operations.',
+    achievements: [
+      'Designed, customized, and managed the complete Shopify e-commerce store',
+      'Created and managed product listings including titles, descriptions, images, pricing, and variants',
+      'Handled end-to-end e-commerce operations such as inventory, orders, and customer flow',
+      'Managed Email and WhatsApp marketing campaigns for promotions and engagement',
+      'Created and managed audience segments for targeted marketing campaigns',
+      'Optimized store UI/UX to improve user experience and conversions',
+      'Worked with Shopify Liquid, HTML, CSS, and JavaScript'
+    ]
+  }
+];
+
 
   const education = [
     {
