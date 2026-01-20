@@ -135,7 +135,7 @@ export default function Footer() {
               <span>using React & TypeScript</span>
             </div>
             <div className="flex items-center space-x-4 text-sm text-gray-400">
-              <span>Inspired by skipper.ui design</span>
+              <span>Inspired by Nikhil khandelwal design</span>
               <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
               <span>Built with modern web technologies</span>
             </div>
