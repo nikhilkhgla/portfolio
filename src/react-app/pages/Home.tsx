@@ -49,7 +49,7 @@ export default function Home() {
     link: 'https://anavacomputing.com/'
   },
   {
-    title: 'Cinnamon Kitchen – Shopify Store',
+    title: 'The Cinnamon Kitchen – Shopify Store',
     description:
       'Modern Shopify-based e-commerce store designed and customized as a Shopify Developer with a premium food brand experience.',
     tech: ['Shopify', 'Liquid', 'HTML', 'CSS', 'JavaScript'],
