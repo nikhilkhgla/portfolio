@@ -62,6 +62,21 @@ export default function Home() {
     gradient: 'from-rose-400 to-orange-500',
     link: 'https://cinnamon.kitchen/'
   },
+    {
+  title: 'Shopify Sales Analytics Dashboard',
+  description:
+    'A powerful analytics dashboard to track and analyze sales performance across Shopify, Meta Ads, Google Ads, Organic Traffic, and Customer Retention.',
+  tech: ['React.js', 'Vite', 'Tailwind CSS', 'Node.js', 'API Integration'],
+  features: [
+    'Channel-wise Sales Tracking',
+    'Real-time Analytics Dashboard',
+    'Revenue Breakdown by Source',
+    'Performance Comparison (Meta, Google, Organic)',
+    'Customer Retention Insights'
+  ],
+  gradient: 'from-purple-500 to-pink-500',
+  link: 'https://shopify-dashboard-rosy.vercel.app/'
+},
   {
     title: 'Dynamic Mobile App (Internship Project)',
     description:
