@@ -1,701 +1,467 @@
-import { useEffect, useState } from 'react';
-import { ArrowDown, Download, ExternalLink, MapPin, Calendar, Award, Code2, Database, Palette, Server, BookOpen, Trophy, CheckCircle, Mail, Instagram, Github, Linkedin, Phone, Sparkles, Zap } from 'lucide-react';
-import Header from '@/react-app/components/Header';
-import Footer from '@/react-app/components/Footer';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
+import {
+  ArrowDown, ArrowUpRight, Download, MapPin, Calendar, Award, GraduationCap,
+  Code2, Server, Database, Wrench, Mail, Instagram, Github, Linkedin,
+  Phone, Sparkles, Zap, Send, CheckCircle2, Briefcase, BookOpen, Rocket,
+} from 'lucide-react';
+import Reveal from '@/react-app/components/Reveal';
+import SectionTitle from '@/react-app/components/SectionTitle';
+import TiltCard from '@/react-app/components/TiltCard';
+import ProjectCard from '@/react-app/components/ProjectCard';
+import CountUp from '@/react-app/components/CountUp';
+import { projects } from '@/react-app/data/projects';
+import { useSectionNav } from '@/react-app/hooks/useSectionNav';
 
-
-
-export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const skills = {
-    languages: ['Python', 'Java', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'SQL'],
-    frameworks: ['React.js', 'Django', 'Node.js', 'Angular', 'Ionic', 'Spring Boot'],
-    databases: ['MongoDB', 'SQLite', 'Firebase'],
-    tools: ['Git', 'GitLab', 'Eclipse', 'Canva', 'Bootstrap']
-  };
-
-  const projects = [
-  {
-    title: 'Eco India E-commerce Platform',
-    description:
-      'Revolutionary e-commerce platform for eco-friendly products with AI-powered help desk and 3D product visualization.',
-    tech: ['React.js', 'Node.js', 'Python', 'AI', '3D Modeling'],
-    features: [
-      'AI Help Desk',
-      '3D Product Visualization',
-      'Eco-friendly Focus',
-      'Interactive UI'
-    ],
-    gradient: 'from-green-400 to-blue-500',
-    link: 'https://ecoindia.vercel.app/'
-  },
-  {
-    title: 'Anava Computing – Corporate Website',
-    description:
-      'Professional corporate website designed for Anava Computing with focus on branding, performance, and clean UI.',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    features: [
-      'Corporate UI Design',
-      'Responsive Layout',
-      'Performance Optimized',
-      'Client-focused Design'
-    ],
-    gradient: 'from-cyan-400 to-blue-600',
-    link: 'https://anavacomputing.com/'
-  },
-  {
-    title: 'The Cinnamon Kitchen – Shopify Store',
-    description:
-      'Modern Shopify-based e-commerce store designed and customized as a Shopify Developer with a premium food brand experience.',
-    tech: ['Shopify', 'Liquid', 'HTML', 'CSS', 'JavaScript'],
-    features: [
-      'Shopify Theme Customization',
-      'Product & Collection Pages',
-      'Mobile Responsive Design',
-      'Conversion-focused UI'
-    ],
-    gradient: 'from-rose-400 to-orange-500',
-    link: 'https://cinnamon.kitchen/'
-  },
-    {
-  title: 'Shopify Sales Analytics Dashboard',
-  description:
-    'A powerful analytics dashboard to track and analyze sales performance across Shopify, Meta Ads, Google Ads, Organic Traffic, and Customer Retention.',
-  tech: ['React.js', 'Vite', 'Tailwind CSS', 'Node.js', 'API Integration'],
-  features: [
-    'Channel-wise Sales Tracking',
-    'Real-time Analytics Dashboard',
-    'Revenue Breakdown by Source',
-    'Performance Comparison (Meta, Google, Organic)',
-    'Customer Retention Insights'
-  ],
-  gradient: 'from-purple-500 to-pink-500',
-  link: 'https://shopify-dashboard-rosy.vercel.app/'
-},
-  {
-    title: 'Dynamic Mobile App (Internship Project)',
-    description:
-      'Comprehensive cross-platform mobile application developed during internship with focus on performance and modern UI.',
-    tech: ['Angular', 'Ionic', 'TypeScript'],
-    features: [
-      'Cross-platform',
-      'Dynamic UI',
-      'Responsive Design',
-      'User-centric Experience'
-    ],
-    gradient: 'from-purple-400 to-pink-500'
-  },
-  {
-    title: 'Todo Management App',
-    description:
-      'Full-featured task management application with secure authentication and complete CRUD functionality.',
-    tech: ['Python', 'Django', 'SQLite', 'HTML', 'CSS'],
-    features: [
-      'User Authentication',
-      'Task CRUD Operations',
-      'Responsive UI',
-      'Data Persistence'
-    ],
-    gradient: 'from-blue-400 to-indigo-500'
-  },
-  {
-    title: 'Blog Publishing Platform',
-    description:
-      'Dynamic blogging platform enabling content creation, editing, and publishing with a clean modern interface.',
-    tech: ['Django', 'HTML', 'CSS', 'SQLite'],
-    features: [
-      'Content Management System',
-      'Dynamic Rendering',
-      'Publishing Workflow',
-      'Modern UI'
-    ],
-    gradient: 'from-orange-400 to-red-500'
-  }
+const heroStats = [
+  { value: '8+', label: 'Projects Shipped' },
+  { value: '6+', label: 'Live Products' },
+  { value: '3', label: 'Companies' },
 ];
-  const experience = [
+
+const techMarquee = [
+  'React', 'TypeScript', 'Node.js', 'Cloudflare Workers', 'Stripe', 'Tailwind CSS',
+  'Java', 'Spring Boot', 'Python', 'Shopify', 'Liquid', 'WordPress', 'MySQL',
+  'Express.js', 'REST APIs', 'IoT', 'AI',
+];
+
+const skillGroups = [
+  { title: 'Languages', icon: Code2, items: ['Java', 'JavaScript', 'TypeScript', 'Python', 'SQL', 'HTML', 'CSS'], grad: 'from-cyan-400 to-blue-500' },
+  { title: 'Frameworks', icon: Server, items: ['React', 'Node.js', 'Express.js', 'Spring Boot', 'Tailwind CSS', 'Angular / Ionic', 'Bootstrap'], grad: 'from-violet-400 to-purple-600' },
+  { title: 'Databases & Cloud', icon: Database, items: ['MySQL', 'MongoDB', 'Firebase', 'Cloudflare Workers', 'Vercel', 'REST APIs'], grad: 'from-emerald-400 to-teal-500' },
+  { title: 'Platforms & Tools', icon: Wrench, items: ['Shopify', 'Liquid', 'WordPress', 'Stripe', 'Git / GitLab', 'Canva'], grad: 'from-fuchsia-400 to-pink-500' },
+];
+
+const experience = [
+  {
+    title: 'Software Engineer',
+    company: 'Braj Aggarwal, CPA, P.C.',
+    period: 'Sep 2025 – Present',
+    points: [
+      'Developing the RentVilla booking platform with booking & payment integration',
+      'Built a Fintech Admin Portal for transactions, reports & user management',
+      'Worked across React, TypeScript, APIs & Cloudflare Workers',
+      'Managed deployment, server setup & office networking',
+    ],
+  },
+  {
+    title: 'Java Developer',
+    company: 'Anava Computing Technology Pvt. Ltd.',
+    period: 'May 2025 – Sep 2025',
+    points: [
+      'Built dynamic web apps using Spring MVC, Thymeleaf and Bootstrap',
+      'Developed backend modules with Core Java, Spring Boot and REST APIs',
+      'Integrated MySQL and optimised CRUD operations',
+      'Followed Agile practices, deployed builds on Tomcat',
+    ],
+  },
   {
     title: 'Associate Intern',
-    company: 'Spundan Consultancy and IT Solutions Pvt. Ltd.',
-    period: 'June 2023 – July 2023',
-    description:
-      'Developed dynamic mobile applications with a strong focus on innovative front-end design using Angular and Ionic framework.',
-    achievements: [
-      'Built responsive mobile application in an intensive internship program',
-      'Demonstrated strong problem-solving skills and innovative thinking',
-      'Collaborated effectively with cross-functional development teams',
-      'Enhanced application performance and overall user experience'
-    ]
+    company: 'Spundan Consultancy & IT Solutions Pvt. Ltd.',
+    period: 'Jun 2023 – Jul 2023',
+    points: [
+      'Developed a dynamic HR Payroll app using Angular, Ionic and TypeScript',
+      'Enhanced application performance and UI/UX',
+      'Collaborated with Agile teams for smooth feature deployment',
+      'Gained hands-on experience in API integration & mobile optimisation',
+    ],
   },
-  {
-    title: 'Shopify Executive',
-    company: 'The Cinnamon Kitchen',
-    period: 'November 2025 – January 2026',
-    description:
-      'Worked as a Shopify Executive while independently managing complete e-commerce operations.',
-    achievements: [
-      'Designed, customized, and managed the complete Shopify e-commerce store',
-      'Created and managed product listings including titles, descriptions, images, pricing, and variants',
-      'Handled end-to-end e-commerce operations such as inventory, orders, and customer flow',
-      'Managed Email and WhatsApp marketing campaigns for promotions and engagement',
-      'Created and managed audience segments for targeted marketing campaigns',
-      'Optimized store UI/UX to improve user experience and conversions',
-      'Worked with Shopify Liquid, HTML, CSS, and JavaScript'
-    ]
-  }
 ];
 
+const certifications = [
+  { name: 'Big Data Technology', org: 'FutureSkills Prime · IT-ITeS SSC', year: 'Certified' },
+  { name: 'Head Designer', org: 'NGO Shiksha Kayakalp, GLA', year: 'Mar 2024' },
+  { name: 'React JS Course', org: 'Ducat, Delhi', year: '2023' },
+  { name: 'Data Structures & Algorithms', org: 'Apna College', year: '2023' },
+];
 
-  const education = [
-    {
-      degree: 'Bachelor of Technology in Computer Science',
-      institution: 'GLA University, Mathura',
-      period: 'June 2025',
-      type: 'degree'
-    },
-    {
-      degree: 'Intermediate',
-      institution: 'Modern Academy International, Mathura',
-      period: 'May 2021',
-      type: 'intermediate'
-    },
-    {
-      degree: 'High School',
-      institution: 'M.D Jain Public School, Mathura',
-      period: 'May 2019',
-      type: 'school'
+export default function Home() {
+  const location = useLocation();
+  const goTo = useSectionNav();
+
+  // Scroll to a section if navigated here with a target.
+  useEffect(() => {
+    const target = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    if (target) {
+      const t = window.setTimeout(() => {
+        document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+      }, 80);
+      return () => window.clearTimeout(t);
     }
-  ];
-
-  const activities = [
-    { name: 'React JS Course', org: 'Ducat (Southex Delhi)', year: '2023' },
-    { name: 'Data Structure & Algorithms Course', org: 'Apna College', year: '2023' },
-    { name: 'Smart India Hackathon Participant', org: 'SIH', year: '2023' },
-    { name: 'Lead Designer', org: 'Shiksha Kayakalp (GLA)', year: 'March 2024' }
-  ];
+  }, [location.state]);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      
-      {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('https://mocha-cdn.com/019841bb-8d45-7ca7-80cc-8e5726577fc4/tech-background.jpg')`
-            }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-purple-900/90 to-indigo-900/90"></div>
-          <div className="absolute inset-0 opacity-20">
-            {[...Array(150)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`
-                }}
-              />
-            ))}
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-        </div>
-
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div className={`transition-all duration-1000 transform ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
-            <div className="mb-8">
-              <div className="relative w-40 h-40 mx-auto mb-8">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full animate-pulse"></div>
-                <div className="absolute inset-2 bg-gray-900 rounded-full overflow-hidden">
-  <img 
-    src="/nikhil-kh.png" 
-    alt="Nikhil Khandelwal" 
-    className="w-full h-full object-cover"
-  />
-</div>
-
-
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
-                <div className="absolute top-0 right-0 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
+    <div className="relative">
+      {/* ===================== HERO ===================== */}
+      <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24">
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          <Reveal>
+            {/* Avatar */}
+            <div className="relative mx-auto mb-9 h-36 w-36">
+              <span className="absolute inset-0 animate-spin-slow rounded-full bg-gradient-to-r from-cyan-400 via-violet-500 to-fuchsia-500 blur-[2px]" />
+              <span className="absolute -inset-3 rounded-full border border-white/10" />
+              <span className="absolute -inset-6 rounded-full border border-white/5" />
+              <div className="absolute inset-1.5 overflow-hidden rounded-full bg-space-900">
+                <img src="/nikhil-kh.png" alt="Nikhil Khandelwal" className="h-full w-full object-cover" />
               </div>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Nikhil
+              <span className="absolute right-1 top-2 grid h-8 w-8 place-items-center rounded-full bg-green-500 ring-4 ring-space-950">
+                <Sparkles className="h-4 w-4 text-white" />
               </span>
-              <br />
-              <span className="text-white">Khandelwal</span>
+            </div>
+
+            <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium tracking-wide text-cyan-200">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+              Available for work & collaborations
+            </span>
+
+            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] text-white md:text-7xl">
+              <span className="text-gradient-animate">Nikhil</span> Khandelwal
             </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-              Computer Science Graduate & Full Stack Developer
+
+            <p className="mx-auto mt-5 max-w-2xl text-lg text-indigo-100/80 md:text-2xl">
+              Full-Stack Developer building <span className="text-cyan-300">fast</span>,{' '}
+              <span className="text-violet-300">futuristic</span> web products.
             </p>
-            
-            <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Passionate about creating innovative solutions through technology. 
-              Specializing in web development, mobile apps, AI, and IoT systems.
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-indigo-200/60 md:text-base">
+              Booking engines, fintech platforms, e-commerce brands and smart-farming systems —
+              from React &amp; Cloudflare to Shopify, Stripe and beyond.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+
+            {/* CTAs */}
+            <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-full font-bold hover:scale-110 transform transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 relative overflow-hidden"
+                onClick={() => goTo('projects')}
+                className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-violet-600 to-fuchsia-600 px-8 py-3.5 font-semibold text-white shadow-glow transition-transform hover:scale-105"
               >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <Zap className="w-5 h-5" />
-                  <span>View My Work</span>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <Zap className="h-5 w-5" />
+                Explore My Work
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
               <a
-  href="/resume.pdf"
-  download
-  className="group px-10 py-4 border-2 border-white/40 text-white rounded-full font-bold hover:bg-white/20 hover:scale-110 hover:border-white/60 transform transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm"
->
-  <Download className="w-5 h-5 group-hover:animate-bounce" />
-  <span>Download Resume</span>
-</a>
-
-            </div>
-            
-            <div className="flex justify-center space-x-6 mb-8">
-              <a
-                href="https://github.com/nikhilkhgla"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 hover:scale-110 transform transition-all duration-300"
+                href="/resume.pdf"
+                download
+                className="flex items-center gap-2 rounded-full border border-white/15 glass px-8 py-3.5 font-semibold text-white transition-all hover:scale-105 hover:border-cyan-400/40"
               >
-                <Github className="w-6 h-6 text-white group-hover:text-blue-300" />
+                <Download className="h-5 w-5" />
+                Download Resume
               </a>
-              <a
-                href="https://www.linkedin.com/in/nikhil-khandelwal-3972a9217/?originalSubdomain=in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 hover:scale-110 transform transition-all duration-300"
-              >
-                <Linkedin className="w-6 h-6 text-white group-hover:text-blue-300" />
-              </a>
-              <a
-                href="https://www.instagram.com/nikhil_khandelwal_02/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 hover:scale-110 transform transition-all duration-300"
-              >
-                <Instagram className="w-6 h-6 text-white group-hover:text-white" />
-              </a>
-              <a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=kosinikhilkhand@gmail.com&su=Hey%20Nikhil&body=Hyy%20Nikhil"
-  className="group p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 hover:scale-110 transform transition-all duration-300"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <Mail className="w-6 h-6 text-white group-hover:text-blue-300" />
-</a>
+            </div>
 
+            {/* Socials */}
+            <div className="mt-8 flex items-center justify-center gap-3">
+              {[
+                { Icon: Github, href: 'https://github.com/nikhilkhgla', label: 'GitHub' },
+                { Icon: Linkedin, href: 'https://www.linkedin.com/in/nikhil-khandelwal-3972a9217/?originalSubdomain=in', label: 'LinkedIn' },
+                { Icon: Instagram, href: 'https://www.instagram.com/nikhil_khandelwal_02/', label: 'Instagram' },
+                { Icon: Mail, href: 'mailto:kosinikhilkhand@gmail.com', label: 'Email' },
+              ].map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-white/10 glass text-indigo-100 transition-all hover:scale-110 hover:border-cyan-400/40 hover:text-cyan-300"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
-            
-            <div className="flex items-center justify-center space-x-2 text-gray-400">
-              <MapPin className="w-4 h-4" />
-              <span>Noida, Uttar Pradesh</span>
+
+            <div className="mt-7 flex items-center justify-center gap-2 text-sm text-indigo-200/60">
+              <MapPin className="h-4 w-4" /> Noida, Uttar Pradesh, India
             </div>
-          </div>
+
+            {/* Stats */}
+            <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-3">
+              {heroStats.map((s) => (
+                <div key={s.label} className="rounded-2xl glass px-3 py-4">
+                  <CountUp value={s.value} className="inline-block font-display text-2xl font-bold text-gradient md:text-3xl" />
+                  <div className="mt-1 text-[11px] uppercase tracking-wider text-indigo-200/60">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
-        
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-6 h-6 text-white" />
-        </div>
+
+        <button
+          onClick={() => goTo('about')}
+          aria-label="Scroll down"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/70"
+        >
+          <ArrowDown className="h-6 w-6" />
+        </button>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">About Me</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="relative">
-                <img 
-                  src="https://mocha-cdn.com/019841bb-8d45-7ca7-80cc-8e5726577fc4/workspace.jpg" 
-                  alt="Workspace" 
-                  className="w-full h-80 object-cover rounded-2xl shadow-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">My Development Setup</h3>
-                  <p className="text-gray-200">Where innovation happens daily</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-6">
-                <div className="group text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <Trophy className="w-10 h-10 text-blue-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                  <h3 className="font-bold text-gray-900 text-lg">Hackathon</h3>
-                  <p className="text-gray-600">SIH Participant</p>
-                </div>
-                <div className="group text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <Award className="w-10 h-10 text-purple-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                  <h3 className="font-bold text-gray-900 text-lg">Lead Designer</h3>
-                  <p className="text-gray-600">Shiksha Kayakalp</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-6">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25"></div>
-                <div className="relative bg-white p-8 rounded-2xl">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <Sparkles className="w-8 h-8 text-purple-600 mr-3" />
-                    About Me
-                  </h3>
-                  <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                    I'm a passionate Computer Science graduate with extensive hands-on development experience. 
-                    My journey in technology spans across web development, mobile applications, artificial intelligence, 
-                    and Internet of Things (IoT) systems.
-                  </p>
-                  <p className="text-lg text-gray-700 leading-relaxed">
-                    With proficiency in multiple programming languages and frameworks, I focus on creating 
-                    user-centric solutions that make a real impact. My experience includes building e-commerce 
-                    platforms, AI-driven applications, and innovative mobile solutions.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-xl">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Professional Skills</h3>
-              <div className="space-y-4">
-                {[
-                  { skill: 'Effective Communication', level: 95 },
-                  { skill: 'Problem Solving', level: 90 },
-                  { skill: 'Team Collaboration', level: 88 },
-                  { skill: 'Innovation & Creativity', level: 92 }
-                ].map((item, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-gray-700">{item.skill}</span>
-                      <span className="text-gray-500">{item.level}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${item.level}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      {/* ===================== TECH MARQUEE ===================== */}
+      <div className="relative z-10 overflow-hidden border-y border-white/10 py-5 glass">
+        <div className="marquee-track">
+          {[...techMarquee, ...techMarquee].map((t, i) => (
+            <span key={i} className="mx-6 inline-flex items-center gap-3 font-display text-lg font-medium text-indigo-100/50">
+              {t} <span className="text-cyan-400/50">✦</span>
+            </span>
+          ))}
         </div>
-      </section>
+      </div>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Technical Skills</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { title: 'Languages', items: skills.languages, icon: Code2, color: 'blue', gradient: 'from-blue-400 to-blue-600' },
-              { title: 'Frameworks', items: skills.frameworks, icon: Server, color: 'purple', gradient: 'from-purple-400 to-purple-600' },
-              { title: 'Databases', items: skills.databases, icon: Database, color: 'green', gradient: 'from-green-400 to-green-600' },
-              { title: 'Tools', items: skills.tools, icon: Palette, color: 'orange', gradient: 'from-orange-400 to-orange-600' }
-            ].map((category, index) => (
-              <div key={index} className="group relative bg-white rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:scale-105">
-                <div className={`absolute -inset-0.5 bg-gradient-to-r ${category.gradient} rounded-2xl blur opacity-0 group-hover:opacity-75 transition duration-500`}></div>
-                <div className="relative bg-white rounded-2xl p-6">
-                  <div className={`w-14 h-14 bg-gradient-to-br ${category.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <category.icon className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">{category.title}</h3>
-                  <div className="space-y-3">
-                    {category.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-center space-x-3 group/item">
-                        <CheckCircle className={`w-5 h-5 text-${category.color}-500 group-hover/item:scale-125 transition-transform`} />
-                        <span className="text-gray-700 font-medium group-hover/item:text-gray-900">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ===================== ABOUT ===================== */}
+      <section id="about" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <SectionTitle eyebrow="Who I Am" title="About Me" />
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            <Reveal>
+              <TiltCard className="rounded-3xl glass border-glow p-8" max={6}>
+                <h3 className="mb-4 flex items-center gap-3 font-display text-2xl font-bold text-white">
+                  <Sparkles className="h-6 w-6 text-violet-300" /> Crafting the future, one build at a time
+                </h3>
+                <p className="leading-relaxed text-indigo-200/75">
+                  I'm a Computer Science graduate and full-stack developer who loves turning ideas into
+                  polished, production-ready products. My work spans booking engines, fintech platforms,
+                  e-commerce brands and IoT + AI systems.
+                </p>
+                <p className="mt-4 leading-relaxed text-indigo-200/75">
+                  From React, TypeScript and Cloudflare Workers to Shopify, Stripe and Spring Boot — I focus
+                  on clean architecture, delightful UI and real business impact. Whether it's a Stripe-powered
+                  booking flow or a brand selling across Amazon, Flipkart and Shopify, I design and ship it
+                  end-to-end.
+                </p>
+              </TiltCard>
+            </Reveal>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Featured Projects</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto"></div>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="group bg-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className={`h-48 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  </div>
-                </div>
-                
-                <div className="p-6 space-y-4">
-                  <p className="text-gray-300 leading-relaxed">{project.description}</p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span key={techIndex} className="px-3 py-1 bg-gray-700 text-blue-400 rounded-full text-sm font-medium">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="space-y-2">
-                    {project.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-green-400" />
-                        <span className="text-gray-300">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="flex space-x-4 pt-4">
-                    <a
-  href={project.link}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
->
-  <ExternalLink className="w-4 h-4" />
-  <span>View Project</span>
-</a>
-
-
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Experience</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
-          </div>
-          
-          <div className="space-y-8">
-            {experience.map((exp, index) => (
-              <div key={index} className="bg-gray-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{exp.title}</h3>
-                    <p className="text-xl text-blue-600 font-semibold">{exp.company}</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-gray-600 mt-2 md:mt-0">
-                    <Calendar className="w-4 h-4" />
-                    <span className="font-medium">{exp.period}</span>
-                  </div>
-                </div>
-                
-                <p className="text-gray-700 leading-relaxed mb-6">{exp.description}</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {exp.achievements.map((achievement, achIndex) => (
-                    <div key={achIndex} className="flex items-start space-x-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{achievement}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Education Section */}
-      <section id="education" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Education</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto"></div>
-          </div>
-          
-          <div className="space-y-6">
-            {education.map((edu, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <BookOpen className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">{edu.degree}</h3>
-                      <p className="text-gray-600">{edu.institution}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 text-gray-500 mt-2 md:mt-0">
-                    <Calendar className="w-4 h-4" />
-                    <span>{edu.period}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Additional Training & Activities</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {activities.map((activity, index) => (
-                <div key={index} className="bg-white rounded-lg p-6 shadow-md">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{activity.name}</h4>
-                      <p className="text-gray-600">{activity.org}</p>
-                    </div>
-                    <span className="text-blue-600 font-medium">{activity.year}</span>
-                  </div>
-                </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { Icon: Briefcase, label: 'Software Engineer', sub: 'Braj Aggarwal, CPA' },
+                { Icon: Rocket, label: 'Ships Live Products', sub: 'Used by real users' },
+                { Icon: Award, label: 'Head Designer', sub: 'Shiksha Kayakalp' },
+                { Icon: GraduationCap, label: 'B.Tech CSE', sub: 'GLA University' },
+              ].map(({ Icon, label, sub }, i) => (
+                <Reveal key={label} delay={i * 90}>
+                  <TiltCard className="rounded-2xl glass border-glow p-5" max={10}>
+                    <Icon className="mb-3 h-8 w-8 text-cyan-300" />
+                    <div className="font-display font-semibold text-white">{label}</div>
+                    <div className="text-sm text-indigo-200/60">{sub}</div>
+                  </TiltCard>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-br from-blue-900 to-purple-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Let's Connect</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Ready to collaborate on exciting projects or discuss opportunities? 
-              I'm always open to connecting with fellow developers and innovative companies.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Email</h3>
-                  <a href="mailto:kosinikhilkhand@gmail.com" className="text-blue-400 hover:text-blue-300">
-                    kosinikhilkhand@gmail.com
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Phone</h3>
-                  <span className="text-gray-300">+91 8937879361</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
-                  <Instagram className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Instagram</h3>
-                  <a href="https://www.instagram.com/nikhil_khandelwal_02/" className="text-purple-400 hover:text-purple-300">
-                    @nikhil_khandelwal_02
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
-                  <MapPin className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Location</h3>
-                  <span className="text-gray-300">Noida, Uttar Pradesh, 201303</span>
-                </div>
-              </div>
-            </div>
-            
-           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8">
-  <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-  <form
-    action="https://formspree.io/f/mrblkpne"
-    method="POST"
-    className="space-y-6"
-  >
-    <div>
-      <input
-        type="text"
-        name="name"
-        placeholder="Your Name"
-        required
-        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-      />
-    </div>
-    <div>
-      <input
-        type="email"
-        name="email"
-        placeholder="Your Email"
-        required
-        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-      />
-    </div>
-    <div>
-      <textarea
-        name="message"
-        rows={4}
-        placeholder="Your Message"
-        required
-        className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-blue-400"
-      ></textarea>
-    </div>
-    <button
-      type="submit"
-      className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:scale-105 transform transition-all duration-300"
-    >
-      Send Message
-    </button>
-  </form>
-</div>
-
+      {/* ===================== SKILLS ===================== */}
+      <section id="skills" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <SectionTitle eyebrow="Toolbox" title="Technical Skills" subtitle="The stack I reach for to design, build and ship." />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {skillGroups.map((g, i) => (
+              <Reveal key={g.title} delay={i * 90}>
+                <TiltCard className="h-full rounded-3xl glass border-glow p-6" max={10}>
+                  <div className={`mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${g.grad}`}>
+                    <g.icon className="h-7 w-7 text-white" />
+                  </div>
+                  <h3 className="mb-4 font-display text-lg font-bold text-white">{g.title}</h3>
+                  <ul className="space-y-2.5">
+                    {g.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-sm text-indigo-200/75">
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-cyan-400" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </TiltCard>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      <Footer />
+      {/* ===================== PROJECTS ===================== */}
+      <section id="projects" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <SectionTitle
+            eyebrow="Featured Work"
+            title="Projects & Workflows"
+            subtitle="Tap any project to step through its 3D workflow — how it was built, end to end."
+          />
+          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((p, i) => (
+              <Reveal key={p.slug} delay={(i % 3) * 90}>
+                <ProjectCard project={p} index={i} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== EXPERIENCE ===================== */}
+      <section id="experience" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <SectionTitle eyebrow="Journey" title="Experience" />
+          <div className="relative">
+            <div className="pointer-events-none absolute bottom-0 left-4 top-0 w-px flow-line md:left-1/2 md:-translate-x-1/2" />
+            <div className="space-y-8">
+              {experience.map((exp, i) => (
+                <Reveal key={exp.company} delay={i * 80}>
+                  <div className={`relative flex gap-5 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                    <span className="absolute left-4 top-7 z-10 h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-cyan-400 ring-4 ring-space-950 md:left-1/2" />
+                    <div className={`w-full pl-12 md:w-1/2 md:pl-0 ${i % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
+                      <TiltCard className="rounded-2xl glass border-glow p-6" max={5}>
+                        <div className="mb-1 flex items-center gap-2 text-xs font-medium text-cyan-300">
+                          <Calendar className="h-3.5 w-3.5" /> {exp.period}
+                        </div>
+                        <h3 className="font-display text-xl font-bold text-white">{exp.title}</h3>
+                        <p className="mb-4 text-sm font-medium text-violet-300">{exp.company}</p>
+                        <ul className="space-y-2">
+                          {exp.points.map((pt) => (
+                            <li key={pt} className="flex items-start gap-2 text-sm text-indigo-200/70">
+                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400/80" />
+                              {pt}
+                            </li>
+                          ))}
+                        </ul>
+                      </TiltCard>
+                    </div>
+                    <div className="hidden md:block md:w-1/2" />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== EDUCATION & CERTS ===================== */}
+      <section id="education" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <SectionTitle eyebrow="Foundations" title="Education & Certifications" />
+          <Reveal>
+            <TiltCard className="mb-8 rounded-3xl glass border-glow p-7" max={5}>
+              <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600">
+                    <GraduationCap className="h-7 w-7 text-white" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-white">
+                      B.Tech — Computer Science &amp; Engineering
+                    </h3>
+                    <p className="text-indigo-200/70">GLA University, Mathura</p>
+                  </div>
+                </div>
+                <span className="flex items-center gap-2 rounded-full glass px-4 py-1.5 text-sm text-cyan-200">
+                  <Calendar className="h-4 w-4" /> Sep 2021 – Jul 2025
+                </span>
+              </div>
+            </TiltCard>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {certifications.map((c, i) => (
+              <Reveal key={c.name} delay={i * 80}>
+                <TiltCard className="rounded-2xl glass border-glow p-5" max={9}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <BookOpen className="mt-0.5 h-5 w-5 text-violet-300" />
+                      <div>
+                        <div className="font-semibold text-white">{c.name}</div>
+                        <div className="text-sm text-indigo-200/60">{c.org}</div>
+                      </div>
+                    </div>
+                    <span className="shrink-0 text-sm font-medium text-cyan-300">{c.year}</span>
+                  </div>
+                </TiltCard>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== CONTACT ===================== */}
+      <section id="contact" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <SectionTitle
+            eyebrow="Say Hello"
+            title="Let's Build Something"
+            subtitle="Have a project, a role, or an idea? I'd love to hear about it."
+          />
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* Contact info */}
+            <Reveal>
+              <div className="space-y-4">
+                {[
+                  { Icon: Mail, label: 'Email', value: 'kosinikhilkhand@gmail.com', href: 'mailto:kosinikhilkhand@gmail.com' },
+                  { Icon: Phone, label: 'Phone', value: '+91 89378 79361', href: 'tel:+918937879361' },
+                  { Icon: Instagram, label: 'Instagram', value: '@nikhil_khandelwal_02', href: 'https://www.instagram.com/nikhil_khandelwal_02/' },
+                  { Icon: MapPin, label: 'Location', value: 'Noida, Uttar Pradesh, 201303' },
+                ].map(({ Icon, label, value, href }) => {
+                  const inner = (
+                    <TiltCard className="rounded-2xl glass border-glow p-5" max={6}>
+                      <div className="flex items-center gap-4">
+                        <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-cyan-500/30 to-violet-600/30 ring-1 ring-white/10">
+                          <Icon className="h-5 w-5 text-cyan-300" />
+                        </span>
+                        <div>
+                          <div className="text-xs uppercase tracking-wider text-indigo-200/50">{label}</div>
+                          <div className="font-medium text-white">{value}</div>
+                        </div>
+                      </div>
+                    </TiltCard>
+                  );
+                  return href ? (
+                    <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="block">
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={label}>{inner}</div>
+                  );
+                })}
+              </div>
+            </Reveal>
+
+            {/* Form (Formspree) */}
+            <Reveal delay={120}>
+              <form
+                action="https://formspree.io/f/mrblkpne"
+                method="POST"
+                className="rounded-3xl glass-strong border-glow p-7"
+              >
+                <h3 className="mb-6 flex items-center gap-2 font-display text-xl font-bold text-white">
+                  <Send className="h-5 w-5 text-cyan-300" /> Send a Message
+                </h3>
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    required
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-indigo-200/40 outline-none transition-colors focus:border-cyan-400/60"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    required
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-indigo-200/40 outline-none transition-colors focus:border-cyan-400/60"
+                  />
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Tell me about your project…"
+                    required
+                    className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-indigo-200/40 outline-none transition-colors focus:border-cyan-400/60"
+                  />
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-violet-600 to-fuchsia-600 px-6 py-3.5 font-semibold text-white shadow-glow transition-transform hover:scale-[1.02]"
+                  >
+                    <Send className="h-4 w-4" /> Send Message
+                  </button>
+                </div>
+              </form>
+            </Reveal>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
