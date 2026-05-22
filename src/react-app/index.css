@@ -211,6 +211,42 @@ h1, h2, h3, h4, .font-display {
 }
 .ping-soft { animation: ping-soft 1.8s ease-out infinite; }
 
+/* shield scan beam (SonicWall / security flow) */
+@keyframes shield-scan {
+  0% { transform: translateY(-18px); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(118px); opacity: 0; }
+}
+.shield-scan { animation: shield-scan 3.4s ease-in-out infinite; }
+
+/* circuit-trace march (IoT / robotic flow) */
+@keyframes dash-flow { to { background-position: 18px 0; } }
+.dash-flow { animation: dash-flow 1s linear infinite; }
+
+/* data packet travelling along a horizontal trace (IoT / robotic flow) */
+@keyframes travel-x {
+  0% { left: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.travel-x { animation: travel-x 2.4s linear infinite; }
+
+/* floating decorative glow orbs */
+@keyframes orb-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -26px, 0) scale(1.08); }
+}
+.orb-float { animation: orb-float 14s ease-in-out infinite; will-change: transform; }
+
+/* entrance for chat widget panel + teaser */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.reveal-up { animation: reveal-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
 /* scroll progress + count helpers don't need keyframes */
 
 /* ===== Marquee for tech strip ===== */

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router';
 import {
   ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, Sparkles, Workflow, Compass,
@@ -8,11 +8,50 @@ import { useSectionNav } from '@/react-app/hooks/useSectionNav';
 import Reveal from '@/react-app/components/Reveal';
 import TiltCard from '@/react-app/components/TiltCard';
 import ProjectWorkflow, { STYLE_LABEL } from '@/react-app/components/workflows/ProjectWorkflow';
+import { useSEO, SITE_URL } from '@/react-app/hooks/useSEO';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
   const project = slug ? getProject(slug) : undefined;
   const goTo = useSectionNav();
+
+  const jsonLd = useMemo(() => {
+    if (!project) return undefined;
+    const url = `${SITE_URL}/projects/${project.slug}`;
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CreativeWork',
+          name: project.title,
+          headline: project.title,
+          description: project.description,
+          url,
+          image: `${SITE_URL}/nikhil-kh.png`,
+          keywords: project.tech.join(', '),
+          about: project.tagline,
+          author: { '@type': 'Person', name: 'Nikhil Khandelwal', url: `${SITE_URL}/` },
+          creator: { '@type': 'Person', name: 'Nikhil Khandelwal', url: `${SITE_URL}/` },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+            { '@type': 'ListItem', position: 2, name: project.title, item: url },
+          ],
+        },
+      ],
+    };
+  }, [project]);
+
+  useSEO({
+    title: project ? `${project.title} — Nikhil Khandelwal` : 'Project Not Found — Nikhil Khandelwal',
+    description: project
+      ? project.summary
+      : "This project couldn't be found. Explore Nikhil Khandelwal's portfolio of full-stack, Shopify, WordPress, fintech and IoT projects.",
+    path: project ? `/projects/${project.slug}` : '/projects',
+    jsonLd,
+  });
 
   if (!project) {
     return (

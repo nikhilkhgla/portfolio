@@ -4,9 +4,11 @@ import CosmicBackground from '@/react-app/components/CosmicBackground';
 import ScrollProgress from '@/react-app/components/ScrollProgress';
 import Header from '@/react-app/components/Header';
 import Footer from '@/react-app/components/Footer';
+import ChatWidget from '@/react-app/components/ChatWidget';
 import HomePage from '@/react-app/pages/Home';
 import ProjectDetail from '@/react-app/pages/ProjectDetail';
 import Services from '@/react-app/pages/Services';
+import ServiceDetail from '@/react-app/pages/ServiceDetail';
 import Contact from '@/react-app/pages/Contact';
 
 /** Scrolls to top on route change, unless we're navigating to a section. */
@@ -31,11 +33,13 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
       <Footer />
+      <ChatWidget />
     </Router>
   );
 }

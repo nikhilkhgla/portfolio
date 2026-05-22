@@ -1,0 +1,10 @@
+# robots.txt — Nikhil Khandelwal Portfolio
+# Allow all search engines to crawl the entire site.
+
+User-agent: *
+Allow: /
+
+# Block nothing — this is a public portfolio.
+
+# Sitemap location
+Sitemap: https://portfolio-ten-dusky-q7b2420uo4.vercel.app/sitemap.xml

@@ -4,6 +4,7 @@ import {
 import Reveal from '@/react-app/components/Reveal';
 import SectionTitle from '@/react-app/components/SectionTitle';
 import TiltCard from '@/react-app/components/TiltCard';
+import { useSEO, SITE_URL } from '@/react-app/hooks/useSEO';
 
 const methods = [
   { Icon: Mail, label: 'Email', value: 'kosinikhilkhand@gmail.com', href: 'mailto:kosinikhilkhand@gmail.com' },
@@ -26,7 +27,42 @@ const faqs = [
   { q: 'Can you maintain a site after launch?', a: 'Absolutely. I offer ongoing support, updates and improvements after a project goes live.' },
 ];
 
+const contactJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Contact', item: `${SITE_URL}/contact` },
+      ],
+    },
+    {
+      '@type': 'ContactPage',
+      name: 'Contact Nikhil Khandelwal',
+      url: `${SITE_URL}/contact`,
+      about: { '@type': 'Person', name: 'Nikhil Khandelwal', email: 'mailto:kosinikhilkhand@gmail.com' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
+
 export default function Contact() {
+  useSEO({
+    title: 'Contact Nikhil Khandelwal — Hire a Full-Stack Developer',
+    description:
+      'Get in touch with Nikhil Khandelwal — Full-Stack Developer & Software Engineer in Noida, India. Available for full-stack apps, Shopify & WordPress sites, booking systems and e-commerce. Send a message or connect on email, phone or social.',
+    path: '/contact',
+    jsonLd: contactJsonLd,
+  });
+
   return (
     <div className="relative z-10">
       <section className="px-4 pb-10 pt-32 sm:px-6 lg:px-8">

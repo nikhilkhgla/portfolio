@@ -10,8 +10,10 @@ import SectionTitle from '@/react-app/components/SectionTitle';
 import TiltCard from '@/react-app/components/TiltCard';
 import ProjectCard from '@/react-app/components/ProjectCard';
 import CountUp from '@/react-app/components/CountUp';
+import FloatingOrbs from '@/react-app/components/FloatingOrbs';
 import { projects } from '@/react-app/data/projects';
 import { useSectionNav } from '@/react-app/hooks/useSectionNav';
+import { useSEO } from '@/react-app/hooks/useSEO';
 
 const heroStats = [
   { value: '8+', label: 'Projects Shipped' },
@@ -78,6 +80,13 @@ const certifications = [
 export default function Home() {
   const location = useLocation();
   const goTo = useSectionNav();
+
+  useSEO({
+    title: 'Nikhil Khandelwal — Full-Stack Developer & Software Engineer',
+    description:
+      'Nikhil Khandelwal is a Full-Stack Developer & Software Engineer in Noida, India, building booking engines, fintech platforms, Shopify & WordPress e-commerce and IoT + AI systems. Explore his projects, skills and workflows.',
+    path: '/',
+  });
 
   // Scroll to a section if navigated here with a target.
   useEffect(() => {
@@ -206,6 +215,7 @@ export default function Home() {
 
       {/* ===================== ABOUT ===================== */}
       <section id="about" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <FloatingOrbs />
         <div className="mx-auto max-w-6xl">
           <SectionTitle eyebrow="Who I Am" title="About Me" />
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
@@ -277,6 +287,7 @@ export default function Home() {
 
       {/* ===================== PROJECTS ===================== */}
       <section id="projects" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+        <FloatingOrbs />
         <div className="mx-auto max-w-6xl">
           <SectionTitle
             eyebrow="Featured Work"

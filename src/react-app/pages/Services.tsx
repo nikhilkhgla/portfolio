@@ -1,74 +1,63 @@
 import { Link } from 'react-router';
-import {
-  Code2, ShoppingBag, Globe, CreditCard, Store, BarChart3,
-  ArrowUpRight, Sparkles, Compass, PenTool, Hammer, Rocket, Check,
-} from 'lucide-react';
+import { ArrowUpRight, Sparkles, Compass, PenTool, Hammer, Rocket } from 'lucide-react';
 import Reveal from '@/react-app/components/Reveal';
 import SectionTitle from '@/react-app/components/SectionTitle';
 import TiltCard from '@/react-app/components/TiltCard';
-
-const services = [
-  {
-    Icon: Code2,
-    title: 'Full-Stack Web Development',
-    desc: 'Fast, modern web apps built with React, TypeScript, Node.js and Cloudflare Workers — from idea to production.',
-    points: ['React + TypeScript SPAs', 'REST APIs & backends', 'Cloud deployment & CI'],
-    accent: '#22d3ee',
-    grad: 'from-cyan-400 to-blue-500',
-  },
-  {
-    Icon: ShoppingBag,
-    title: 'Shopify Development',
-    desc: 'Custom Shopify storefronts in Liquid — themes, product pages and a UI tuned to convert visitors into buyers.',
-    points: ['Custom Liquid themes', 'Product & collection pages', 'Conversion optimisation'],
-    accent: '#fb7185',
-    grad: 'from-rose-400 to-orange-500',
-  },
-  {
-    Icon: Globe,
-    title: 'WordPress Websites',
-    desc: 'Professional business sites on WordPress + Elementor — polished, responsive and built for SEO and lead-gen.',
-    points: ['Elementor design', 'On-page SEO', 'Lead-capture funnels'],
-    accent: '#2dd4bf',
-    grad: 'from-emerald-400 to-teal-500',
-  },
-  {
-    Icon: CreditCard,
-    title: 'Booking & Payment Systems',
-    desc: 'End-to-end booking engines with Stripe payments, availability, confirmations and an admin panel.',
-    points: ['Stripe integration', 'Availability & bookings', 'Admin dashboards'],
-    accent: '#8b5cf6',
-    grad: 'from-violet-400 to-purple-600',
-  },
-  {
-    Icon: Store,
-    title: 'E-commerce & Marketplaces',
-    desc: 'Launch and run a brand across Shopify, Amazon and Flipkart — store design, listings and merchandising.',
-    points: ['Multi-channel setup', 'Catalog & listings', 'Brand & store design'],
-    accent: '#f59e0b',
-    grad: 'from-yellow-400 to-orange-600',
-  },
-  {
-    Icon: BarChart3,
-    title: 'Analytics & Dashboards',
-    desc: 'Bring sales data from every channel into one real-time dashboard with clear, actionable insights.',
-    points: ['Channel attribution', 'Real-time dashboards', 'Retention insights'],
-    accent: '#a855f7',
-    grad: 'from-fuchsia-400 to-purple-500',
-  },
-];
+import ServiceCard from '@/react-app/components/ServiceCard';
+import FloatingOrbs from '@/react-app/components/FloatingOrbs';
+import { services, serviceGroups } from '@/react-app/data/services';
+import { useSEO, SITE_URL } from '@/react-app/hooks/useSEO';
 
 const steps = [
   { Icon: Compass, title: 'Discover', desc: 'We talk goals, audience and scope so the build solves the real problem.' },
   { Icon: PenTool, title: 'Design', desc: 'Clean, on-brand UI/UX mapped out before a line of code is written.' },
-  { Icon: Hammer, title: 'Build', desc: 'Production-grade code, shipped in iterations you can see and steer.' },
+  { Icon: Hammer, title: 'Build', desc: 'Production-grade work, shipped in iterations you can see and steer.' },
   { Icon: Rocket, title: 'Launch', desc: 'Deploy, optimise and hand over — with support to keep growing.' },
 ];
 
+const servicesJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Services offered by Nikhil Khandelwal',
+      itemListElement: services.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${SITE_URL}/services/${s.slug}`,
+        name: s.title,
+        item: {
+          '@type': 'Service',
+          name: s.title,
+          description: s.short,
+          url: `${SITE_URL}/services/${s.slug}`,
+          provider: { '@type': 'Person', name: 'Nikhil Khandelwal', url: `${SITE_URL}/` },
+        },
+      })),
+    },
+  ],
+};
+
 export default function Services() {
+  useSEO({
+    title: 'Services — Web, AI, Automation, Networking & IoT | Nikhil Khandelwal',
+    description:
+      'Services by Nikhil Khandelwal: full-stack & Shopify/WordPress development, booking & payment systems, e-commerce, SEO, analytics, custom CRM, automation, AI chatbots & custom AI, networking, Hyper-V & Remote Desktop, SonicWall firewall and IoT setups — each with its own interactive workflow.',
+    path: '/services',
+    jsonLd: servicesJsonLd,
+  });
+
   return (
     <div className="relative z-10">
-      <section className="px-4 pb-12 pt-32 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden px-4 pb-12 pt-32 sm:px-6 lg:px-8">
+        <FloatingOrbs />
         <div className="mx-auto max-w-5xl text-center">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-300">
@@ -78,43 +67,34 @@ export default function Services() {
               <span className="text-gradient-animate">Services</span> that ship.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg text-indigo-200/75">
-              From a single landing page to a full booking platform or a brand selling across marketplaces —
-              I design and build it end-to-end.
+              From web apps and online stores to AI, automation, networking and IoT — tap any service to
+              see exactly how I build it, step by step.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Services grid */}
-      <section className="px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
-            <Reveal key={s.title} delay={(i % 3) * 90}>
-              <TiltCard className="h-full rounded-3xl glass border-glow p-7" max={9}>
-                <div
-                  className={`mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${s.grad}`}
-                  style={{ boxShadow: `0 14px 40px -16px ${s.accent}` }}
-                >
-                  <s.Icon className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="font-display text-lg font-bold text-white">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-indigo-200/70">{s.desc}</p>
-                <ul className="mt-4 space-y-2">
-                  {s.points.map((p) => (
-                    <li key={p} className="flex items-center gap-2 text-sm text-indigo-100/80">
-                      <Check className="h-4 w-4 shrink-0" style={{ color: s.accent }} />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </TiltCard>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      {/* Services grouped by category */}
+      {serviceGroups.map((group, gi) => {
+        const list = services.filter((s) => s.group === group);
+        return (
+          <section key={group} className="px-4 pb-8 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-6xl">
+              <SectionTitle eyebrow={`0${gi + 1}`} title={group} />
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {list.map((s, i) => (
+                  <Reveal key={s.slug} delay={(i % 3) * 90}>
+                    <ServiceCard service={s} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
 
       {/* Process */}
-      <section className="px-4 pb-20 sm:px-6 lg:px-8">
+      <section className="px-4 pb-20 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionTitle eyebrow="How We Work" title="A Simple, Clear Process" />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
